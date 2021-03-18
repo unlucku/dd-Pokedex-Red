@@ -332,17 +332,18 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
      * Removes a node from the tree, if said node matches the given data
      * 
      * @param data the data of the node to be removed
+     * @throws NoSuchElementException if the data is not in the tree
      * @return the data of the removed node
      */
-    public T remove(T data) {
-        Node<T> currentNode = root;
-
+    public T remove(T data) throws NoSuchElementException {
+        
         // Searches for node to remove, starting at the root
+        Node<T> currentNode = root;
         while (currentNode != null) {
-            // Compares current node's data with data specified
+            // Compares current node's data with data to be removed
             int compare = currentNode.data.compareTo(data);
 
-            // If the data is equal --> current node is node to remove, exit loop
+            // If the data is equal --> current node will be removed, exit loop
             if (compare == 0) break;
 
             // Current node's data is less than data specified --> search right subtree
@@ -355,7 +356,7 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
         }
 
         // Return if node to remove is not found
-        if (currentNode == null) return null;
+        if (currentNode == null) throw new NoSuchElementException(data + " was not found");
 
         // Helper method call if node to remove is found
         removeHelper(currentNode);
@@ -363,48 +364,114 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
         return data;
     }
 
-    /**
+       /**
      * Helper method for the remove() method above. This method determines if the given node is a 
      * leaf node, has one child, or two children. From there, it will take the steps necessary to 
      * remove that node
      * 
      * @param nodeToBeDeleted the node to be removed from the tree
      */
-    private void removeHelper(Node<T> nodeToBeDeleted) {
-        // If node to be deleted is a leaf node
-        if (nodeToBeDeleted.leftChild == null && nodeToBeDeleted.rightChild == null) {
+    private void removeHelper(Node<T> z) {
 
-            // If the leaf node is the root
-            if (nodeToBeDeleted == root) {
-                // Set root to null (tree is now empty)
+        // Node with two children
+        if (z.leftChild != null && z.rightChild != null) {
+
+            Node<T> pNode = z.leftChild;
+
+            while (pNode.rightChild != null) pNode = pNode.rightChild;
+
+            z.data = pNode.data;
+
+            removeHelper(pNode);
+
+        }
+
+        // Leaf node
+        if (z.leftChild == null && z.rightChild == null) {
+
+            if (z == root) {
                 root = null;
                 return;
             }
 
-            // Ensures red black tree properties remain intact
-            enforceRBTreePropertiesRemove(nodeToBeDeleted);
+            enforceRBTreePropertiesAfterRemove(z);
 
-            // Determines node relationship to parent and removes the  node
-            if (nodeToBeDeleted.isLeftChild()) 
-                nodeToBeDeleted.parent.leftChild = null;
-            else 
-                nodeToBeDeleted.parent.rightChild = null;
+            if (z.isLeftChild())
+                z.parent.leftChild = null;
+            else
+                z.parent.rightChild = null;
+
+            
+
         }
+
+        // One child
+        else {
+
+            // If the single child is a left child
+            if (z.leftChild != null) {
+
+                // If the parent of the removed node is the root
+                if (z.parent == null) {
+                    // Single child becomes the root
+                    root = z.leftChild;
+                    z.leftChild.isBlack = true; // root is always black
+                    return;
+                }
+
+                // Parent of node to remove becomes parent of the single child node
+                z.leftChild.parent = z.parent;
+
+                if (z.isLeftChild())
+                    z.parent.leftChild = z.leftChild;
+                else 
+                    z.parent.rightChild = z.leftChild;
+
+                //z.leftChild.isBlack = z.isBlack;
+
+                enforceRBTreePropertiesAfterRemove(z.leftChild);
+
+            }
+
+            // If the single child is a right child
+            else if (z.rightChild != null) {
+
+                if (z.parent == null) {
+                    root = z.rightChild;
+                    z.rightChild.isBlack = true;
+                    return;
+                }
+
+                z.rightChild.parent = z.parent;
+
+                if (z.isLeftChild())
+                    z.parent.leftChild = z.rightChild;
+                else 
+                    z.parent.rightChild = z.rightChild;
+
+
+                //z.rightChild.isBlack = z.isBlack;
+
+                enforceRBTreePropertiesAfterRemove(z.rightChild);
+
+            }
+        }
+
+
     }
 
-
     /**
-     * Ensures red black tree properties remain intact after a node is removed from the tree
+     * Ensures Red Black Tree Properties remain intact after a node is removed from the tree
      * 
-     * @param delNode: the node to be removed from the tree
+     * @param node
      */
-    private void enforceRBTreePropertiesRemove(Node<T> delNode) {
+    private void enforceRBTreePropertiesAfterRemove(Node<T> node) {
 
-        Node<T> current = delNode;
+        Node<T> current = node;
         Node<T> sibling;
 
-        // Runs until node to be deleted is the root or until node to be deleted is not black
         while (current != root && current.isBlack) {
+
             if (current.isLeftChild()) {
                 // Since node to be deleted is a left child, its sibling is a right child
                 sibling = current.parent.rightChild;
@@ -440,22 +507,22 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
                         // Sibling is now parent's right child
                         sibling = current.parent.rightChild;
                     }
-                }
 
-                // Case 4: Do this everytime
-                sibling.isBlack = sibling.parent.isBlack; // Sibling's color becomes its parents
-                // Parent becomes black
-                sibling.parent.isBlack = true;
+                    // Case 4: Do this everytime
+                    sibling.isBlack = sibling.parent.isBlack; // Sibling's color becomes its parents
+                    // Parent becomes black
+                    sibling.parent.isBlack = true;
 
-                // If the sibling node has a right child
-                if (sibling.rightChild != null) {
                     // Sibling's right child becomes black
                     sibling.rightChild.isBlack = true;
                     // Rotate sibling and parent
                     rotate(sibling, current.parent);
+
+                    // Current node becomes root
+                    current = root;
+
                 }
-                // Current node becomes root
-                current = root;
+
             }
 
             // Node to be removed is a right child
@@ -484,22 +551,26 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
                         rotate(sibling.rightChild, sibling);
                         sibling = current.parent.leftChild;
                     }
+
+                    // Case 4: Do this everytime
+                    sibling.isBlack = sibling.parent.isBlack;
+                    sibling.parent.isBlack = true;
+
+                    if (sibling.leftChild != null) {
+                        sibling.leftChild.isBlack = true;
+                        rotate(sibling, current.parent);
+                    }
+                    current = root;
                 }
 
-                // Case 4: Do this everytime
-                sibling.isBlack = sibling.parent.isBlack;
-                sibling.parent.isBlack = true;
-
-                if (sibling.leftChild != null) {
-                    sibling.leftChild.isBlack = true;
-                    rotate(sibling, current.parent);
-                }
-                current = root;
+                
             }
+            
         }
 
+        current.isBlack = true;  
+
     }
- 
 
     /**
      * Get the size of the tree (its number of nodes).
@@ -648,5 +719,25 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
         sb.append(" ]");
         return sb.toString();
     }
+
+    // public static void main(String[] args) {
+    //     RedBlackTree<Integer> tree = new RedBlackTree<>();
+
+    //     for (int i = 1; i < 10; i++) {
+    //         tree.insert(i);
+    //     }
+
+    //     tree.remove(1);
+    //     tree.remove(2);
+    //     tree.remove(3);
+    //     tree.remove(4);
+    //     tree.remove(5);
+    //     tree.remove(6);
+    //     tree.remove(7);
+    //     tree.remove(8);
+    //     tree.remove(9);
+
+    //     System.out.println(tree.toString());
+    // }
 
 }
