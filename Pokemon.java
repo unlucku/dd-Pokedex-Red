@@ -8,7 +8,7 @@
 // Notes to Grader: N/A
 import java.util.List;
 
-public class Pokemon implements PokemonInterface{
+public class Pokemon implements PokemonInterface {
 	// #,Name,Type 1,Type 2,Total,HP,Attack,Defense,Sp. Atk,Sp. Def,Speed,Generation,Legendary
 	private int dexNum;
 	private String name;
@@ -116,9 +116,8 @@ public class Pokemon implements PokemonInterface{
 				+ "Generation: " +this.getGeneration() +", IsLegendary: " +this.isLegengary();
 	}
 
-
 	@Override
-	public int compareTo(PokemonInterface a) {
+	public int compareTo(Pokemon a) {
 		if(a==null || !a.getClass().equals(Pokemon.class))
 			throw new IllegalArgumentException("Comparison object is either not a pokemon or null");
 		if(this.getDexNum()>a.getDexNum())

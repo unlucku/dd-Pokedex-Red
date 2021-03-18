@@ -8,7 +8,7 @@
 // Notes to Grader: N/A
 import java.util.List;
 
-public interface PokemonInterface {
+public interface PokemonInterface extends Comparable<Pokemon> {
 	// #,Name,Type 1,Type 2,Total,HP,Attack,Defense,Sp. Atk,Sp. Def,Speed,Generation,Legendary
 	
 	public String getName(); //returns the name of the pokemon
