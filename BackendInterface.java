@@ -8,13 +8,34 @@
 import java.util.List;
 
 public interface BackendInterface {
-    
-    public List<Pokemon> getPokemonInPokedex(int start);
+	/**
+	 * Uses the given ID to find a Pokemon that has a matching ID.
+	 * @param id the id that we are comparing.
+	 * @return the Pokemon with the matching ID or null if it doesn't.
+	 */
+	public Pokemon getID(int id);
 
-    public void addPokemon(String name);
-
-    public Pokemon findPokemonByName(String name);
-
-    public List<Pokemon> findPokemonByCP(int cp);
-
+    /**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public List<Pokemon> getName(String name);
+	
+	/**
+	 * 
+	 * @param gen
+	 * @return
+	 */
+	public List<Pokemon> getGen(int gen);
+	
+	/**
+	 * 
+	 * @param bst
+	 * @return
+	 */
+	public List<Pokemon> getBST(int bst);
+	
+	
 }
+

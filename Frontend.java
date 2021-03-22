@@ -32,11 +32,11 @@ public class Frontend {
 	 */
 	public static void main(String[] args) throws IOException, DataFormatException {
 		Frontend frontend = new Frontend();
-		BackendInterface Back = new Backend(args[0]);
+		Backend Back = new Backend(args[0]);
 		frontend.run(Back);
 	}
 
-	public void run(BackendInterface Back) {
+	public void run(Backend Back) {
 		System.out.println("Welcome to the Pokedex! Are you looking for pokemon? Press f to find them!");
 		System.out.println("(Or press x to quit if you are lame)");
 		String input = in.next();
@@ -52,7 +52,7 @@ public class Frontend {
 
 	}
 	
-	public void updateDisplay(PokemonInterface foundPokemon)
+	public void updateDisplay(Pokemon foundPokemon)
 	{
 		System.out.println("");
 		System.out.println("After looking through inputted information, here are your results:\n");
@@ -68,7 +68,7 @@ public class Frontend {
 		System.out.println("Please input another command.");
 	}
 	
-	public void updateDisplayArr(List<PokemonInterface> foundPokemon)
+	public void updateDisplayArr(List<Pokemon> foundPokemon)
 	{
 		System.out.println("");
 		System.out.println("After looking through inputted information, here are your results:\n");
@@ -89,7 +89,7 @@ public class Frontend {
 		System.out.println("Please input another command.");
 	}
 	
-	private void findPokemon(BackendInterface back)
+	private void findPokemon(Backend back)
 	{
 		System.out.println("How would you like to find your pokemon?");
 		System.out.println("\t'n' - find by name");

@@ -8,152 +8,213 @@
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.zip.DataFormatException;
 
-public class Backend implements BackendInterface {
-    private RedBlackTree<Pokemon> tree; // Red Black Tree where Pokemon in the Pokedex will be stored
-    private List<Pokemon> allPokemon; // List of all Pokemon from the CSV file
+/**
+ * Child class that adds additional functionality to the Red Black Tree
+ */
+class RBTExtension extends RedBlackTree<Pokemon> {
+    private RedBlackTree<Pokemon> tree;
 
-    /**
-     * Uses PokemonReader class to add Pokemon from CSV file to a List
-     * 
-     * @param args the path to the CSV file
-     */
-    public Backend(String[] args) {
-
-        try {
-            // Pokemon data from the given CSV file
-            File pokemonData = new File(args[0]);
-            FileReader f = new FileReader(pokemonData);
-
-            // Adds Pokemon from file to a List
-            allPokemon = new PokemonReader().readDataSet(f);
-        } 
-
-
-		catch(IOException e) {
-			System.out.println("Error Importing file"); // Error importing the file
-		}
-
-		catch(DataFormatException e) {
-			System.out.println("Invalid format for file"); // Data format is not valid
-		}
-
-
-        // Initialize remaining instance fields
-        tree =  new RedBlackTree<>();
-
+    public RBTExtension(RedBlackTree<Pokemon> tree) {
+        this.tree = tree;
     }
 
     /**
-     * Gets the Pokemon from the CSV data whose name matches the one specified
+     * Retrieves Pokemon with the given ID
+     * 
+     * @param id the ID of the Pokemon to be retrieved
+     * @return the Pokemon who's ID matches the one specified
+     */
+    public Pokemon getPokemonById(int id) {
+
+        Node<Pokemon> current = tree.root;
+        
+        // Searches tree
+        while (current != null) {
+            if (current.data.getDexNum() < id) current = current.rightChild;
+            
+            else if (current.data.getDexNum() > id) current = current.leftChild;
+            
+            else return current.data;
+            
+        }
+        // No Pokemon found -> return null
+        return null;
+    }
+
+    /**
+     * Retrieves Pokemon with the given name
      * 
      * @param name the name of the Pokemon to be retrieved
-     * @return
+     * @return the Pokemon whos name matches the given name. If no such Pokemon is found, return null
      */
-    private Pokemon getPokemon(String name) {
+    public List<Pokemon> getPokemonByName(String name) {
+
+        List<Pokemon> pokemons = new ArrayList<>();
+
+        Iterator<Pokemon> treeItr = tree.iterator();
+
+        // If first Pokemon's name matches given name, return that Pokemon
+        if (treeItr.hasNext() && treeItr.next().getName().contains(name))
+			pokemons.add(treeItr.next());
         
-        for (Pokemon p: allPokemon) {
-            
-            if (p.getName().equals(name)) return p;
+        // In-order node traversal. Returns a Pokemon if its name matches the given name
+		while (treeItr.hasNext()) {
+            if (treeItr.next().getName().contains(name))
+                pokemons.add(treeItr.next());
+		}
 
-        }
+        // If no Pokemon were added, null is returned
+        if (pokemons.isEmpty()) return null;
 
-        throw new NoSuchElementException(name + " is not a valid Pokemon name.");
-
+        return pokemons;
     }
-    
-    /**
-     * Gets five Pokemon in the Pokedex, starting at
-     * 
-     * @param start 
-     * @return
-     */
-    public List<Pokemon> getPokemonInPokedex(int start) {
 
-        // List for all Pokemon in the tree
-        List<Pokemon> pokemons = new ArrayList<Pokemon>();
+    public List<Pokemon> getPokemonByGeneration(int gen) {
+        // List of Pokemon whos Generation is less than or equal to the given number
+        List<Pokemon> pokemons = new ArrayList<>();
 
-        // If no items are in the tree, return an empty list
-        if (tree.isEmpty()) return pokemons;
+        Iterator<Pokemon> treeItr = tree.iterator();
+
+        // First item added is first Pokemon whos gen are less than or equal to the given number
+        if (treeItr.hasNext() && treeItr.next().getGeneration() == gen)
+			pokemons.add(tree.iterator().next());
         
-        // Adds all items in the tree to the List
-        for (Iterator<Pokemon> i = tree.iterator(); i.hasNext();) {
-            Pokemon p = i.next();
-            pokemons.add(p); 
-        }
+        // Adds remaining Pokemon whos gen are less than or equal to the given number
+		while (treeItr.hasNext()) {
+            if (treeItr.next().getGeneration() == gen)
+			    pokemons.add(treeItr.next());
+		}
 
-        if (tree.size() < 5) return pokemons.subList(start, tree.size()-1);
+        // If no Pokemon were added, null is returned
+        if (pokemons.isEmpty()) return null;
 
-        // Return the list, starting at index specified
-        return pokemons.subList(start, start+4);
-
+        return pokemons;
     }
 
     /**
-     * Adds Pokemon to the tree
+     * Retrieves all Pokemon in tree whos total stats are lower than the number specified
      * 
-     * @param name the name of the Pokemon to be added
+     * @param high
+     * @return List of Pokemon whos Total Stats are lower than number specified
      */
-    public void addPokemon(String name) {
+    public List<Pokemon> getPokemonInStatRange(int high) {
 
-        tree.insert(getPokemon(name)); // Adds Pokemon to tree
-        System.out.println(name + " added sucessfully. ");
+        // List of Pokemon whos Total Stats are less than or equal to the given number
+        List<Pokemon> pokemons = new ArrayList<>();
 
-    }
+        Iterator<Pokemon> treeItr = tree.iterator();
 
-    /**
-     * Searches the tree for a Pokemon with the name specified
-     * 
-     * @param name the name of the Pokemon to be searched for
-     * @return the Pokemon if it is found, null otherwise
-     */
-    public Pokemon findPokemonByName(String name) {
+        // First item added is first Pokemon whos stats are less than or equal to the given number
+        if (treeItr.hasNext() && treeItr.next().getTotalStats() <= high)
+			pokemons.add(treeItr.next());
+        
+        // Adds remaining Pokemon whos stats are less than or equal to the given number
+		while (treeItr.hasNext()) {
+            if (treeItr.next().getTotalStats() <= high)
+			    pokemons.add(treeItr.next());
+		}
 
-        Pokemon pokemon = getPokemon(name);
-
-        if (tree.contains(pokemon)) {
-
-            return pokemon;
-
-        } 
-
-        return null;
-
-    }
-
-    /**
-     * Searches the tree for Pokemon whos total stats match the value specified
-     * 
-     * @param cp the total stats value of the Pokemon to be searched for
-     * @return
-     */
-    public List<Pokemon> findPokemonByCP(int cp) {
-
-        // List of Pokemon whos total stats match the specified value
-        List<Pokemon> pokemons = new ArrayList<Pokemon>();
-
-        for (Iterator<Pokemon> i = tree.iterator(); i.hasNext();) {
-            Pokemon p = i.next();
-            
-            if (p.getTotalStats() == cp) pokemons.add(p);
-        }
+        // If no Pokemon were added, null is returned
+        if (pokemons.isEmpty()) return null;
 
         return pokemons;
 
     }
 
-
-    public static void main(String[] args) {
-        Backend b = new Backend(args);
-
-        b.addPokemon("Bulbasaur");
-
-        System.out.println(b.findPokemonByName("Charmander"));
-    }
     
+}
+
+public class Backend implements BackendInterface {
+    private RedBlackTree<Pokemon> tree; // Red Black Tree where Pokemon in the Pokedex will be stored
+
+    /**
+     * Uses PokemonReader class to add Pokemon from CSV file to a List
+     * 
+     * @param filePath the path to the CSV file
+     */
+    public Backend(String filePath) {
+        // Initialize tree instance field
+        tree = new RedBlackTree<>();
+
+        try {
+            // Pokemon data from the given CSV file
+            File pokemonData = new File(filePath);
+            FileReader f = new FileReader(pokemonData);
+
+            // Add Pokemon data to the tree
+            for (Pokemon p : new PokemonReader().readDataSet(f)) {
+                try {
+                    tree.insert(p); // Adds the Pokemon
+                } 
+                // Do not add Pokemon with duplicate IDs
+                catch (IllegalArgumentException e) { 
+                    continue;
+                }
+            }
+
+        } catch(IOException e) {
+			System.out.println("Error Importing file"); // Error importing the file
+
+		} catch(DataFormatException e) {
+			System.out.println("Invalid format for file"); // Data format is not valid
+
+		}
+    }
+
+    /**
+     * Constructor that takes StringReader as argument (to be used in test cases)
+     * 
+     * @param s StringReader containing String of Pokemon data
+     */
+    public Backend(Reader s) {
+        // Initialize tree instance field
+        tree = new RedBlackTree<>();
+
+        try {
+            // Add all Pokemon from String of Pokemon to the tree
+            for (Pokemon p : new PokemonReader().readDataSet(s)) {
+                try {
+                    tree.insert(p); // Adds the pokemon
+                } 
+
+                catch (IllegalArgumentException e) { // Do not add Pokemon with duplicate IDs
+                    continue;
+                }
+            }
+        } 
+        
+        catch (IOException | DataFormatException e) { // Error in StringReader data
+            System.out.println("ERROR: Could not parse data.");
+        } 
+
+    }
+
+    public int getTotalPokemon() {
+        return tree.size();
+    }
+
+    public Pokemon getID(int id) {
+
+        return new RBTExtension(tree).getPokemonById(id);
+    }
+
+    public List<Pokemon> getName(String name) {
+
+        return new RBTExtension(tree).getPokemonByName(name);
+    }
+
+    public List<Pokemon> getGen(int genNum) {
+        return new RBTExtension(tree).getPokemonByGeneration(genNum);
+    }
+
+    public List<Pokemon> getBST(int stats) {
+        return new RBTExtension(tree).getPokemonInStatRange(stats);
+    }
+
 }
