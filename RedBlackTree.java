@@ -138,7 +138,7 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
 			enforceRBTreePropertiesAfterInsert(redNode.parent);
 			return;
 		}
-		else if(!redNode.parent.isLeftChild() && !redNode.isLeftChild() && !redNode.parent.isBlack && redNode.parent.parent != null && !redNode.parent.parent.leftChild.isBlack) {
+		else if(!redNode.parent.isLeftChild() && !redNode.isLeftChild() && !redNode.parent.isBlack && redNode.parent.parent != null && redNode.parent.parent.leftChild != null && !redNode.parent.parent.leftChild.isBlack) {
 			//case 3
 			redNode.parent.isBlack = true;
 			redNode.parent.parent.leftChild.isBlack = true;
@@ -169,7 +169,7 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
 			redNode.parent.parent.isBlack = false;
 			return;
 		}
-		else if(!redNode.parent.isLeftChild() && !redNode.isLeftChild() && !redNode.parent.isBlack&& redNode.parent.parent != null && redNode.parent.parent.leftChild.isBlack) {
+		else if(!redNode.parent.isLeftChild() && !redNode.isLeftChild() && !redNode.parent.isBlack&& redNode.parent.parent != null && redNode.parent.parent.leftChild != null && redNode.parent.parent.leftChild.isBlack) {
 			//case 1
 			/**
 			 * Case 1 is solved by rotating the violating nodes parent with its parent
