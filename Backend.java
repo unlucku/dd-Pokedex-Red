@@ -18,8 +18,13 @@ import java.util.zip.DataFormatException;
  * Child class that adds additional functionality to the Red Black Tree
  */
 class RBTExtension extends RedBlackTree<Pokemon> {
-	private RedBlackTree<Pokemon> tree;
+	private RedBlackTree<Pokemon> tree; // the Red Black Tree this child class will interact with
 
+	/**
+	 * Constructor that takes a Red Black Tree as a parameter
+	 * 
+	 * @param tree the Red Black Tree this child class will interact with
+	 */
 	public RBTExtension(RedBlackTree<Pokemon> tree) {
 		this.tree = tree;
 	}
@@ -128,6 +133,9 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 
 }
 
+/**
+ * Backend class for the Pokedex project
+ */
 public class Backend implements BackendInterface {
 	private RedBlackTree<Pokemon> tree; // Red Black Tree where Pokemon in the Pokedex will be stored
 

@@ -11,6 +11,9 @@ import java.io.StringReader;
 
 public class BackEndDeveloperTests {
 
+	/**
+	 * Test for adding Pokemon to the tree when the Backend is created
+	 */
 	@Test
 	public void testBackendNumberOfPokemon() {
 		// Initialize Backend
@@ -31,6 +34,9 @@ public class BackEndDeveloperTests {
 		assertEquals(0, empty.getTotalPokemon());
 	}
 	
+	/**
+	 * Test for finding Pokemon by name
+	 */
 	@Test
 	public void testFindPokemonByName() {
 		// Initialize Backend
@@ -53,6 +59,9 @@ public class BackEndDeveloperTests {
 		
 	}
 	
+	/**
+	 * Test for finding Pokemon by ID
+	 */
 	@Test
 	public void testFindPokemonById() {
 		// Initialize Backend
@@ -72,6 +81,9 @@ public class BackEndDeveloperTests {
 		assertEquals("Venusaur", b.getID(3).getName());
 	}
 	
+	/**
+	 * Test for finding Pokemon by total stat
+	 */
 	@Test
 	public void testFindPokemonByStat() {
 		// Initialize Backend
@@ -94,6 +106,9 @@ public class BackEndDeveloperTests {
 		assertEquals(5, b.getBST(550).size());
 	}
 	
+	/**
+	 * Test for finding Pokemon by gen number
+	 */
 	@Test
 	public void testFindPokemonByGen() {
 		// Initialize Backend
