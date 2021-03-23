@@ -13,7 +13,7 @@ Files Written by Me:
 - PokemonReader.java (Class made to read CSV file and organize into pokemon objects)
 - PokemonReaderInterface.java (Based on P1 ReaderInterface)
 
-Additional Contributions:
+Additional Contributions: 
 -------------------------
 N/A
 
