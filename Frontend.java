@@ -5,6 +5,8 @@
 // Role: Frontend Developer
 // TA: Daniel Kiel
 // Lecturer: Gary Dahl
+// Notes To Grader: This was submitted with team red, but this was written by team blue as
+// our frontend developer dropped the course.
 
 import java.io.IOException;
 import java.util.List;
@@ -23,8 +25,14 @@ public class Frontend {
 	 */
 	public static void main(String[] args) throws IOException, DataFormatException {
 		Frontend frontend = new Frontend();
-		Backend Back = new Backend(args[0]);
-		frontend.run(Back);
+		if (args.length != 0) {
+			Backend backend = new Backend(args[0]);
+			frontend.run(backend);
+		}
+		else {
+			Backend backend = new Backend("pokemon.csv");
+			frontend.run(backend);
+		}
 	}
 
 	/**
@@ -54,17 +62,23 @@ public class Frontend {
 	public void updateDisplay(Pokemon foundPokemon)
 	{
 		System.out.println("");
+		System.out.println("============/============");
 		System.out.println("After looking through inputted information, here are your results:\n");
 		if(foundPokemon != null)
 		{
-			System.out.println(foundPokemon.getName() + "(" + foundPokemon.getType1() + " Type): ");
-			System.out.println("\tTotal Stat is " + foundPokemon.getTotalStats() + " and generation is " + foundPokemon.getGeneration() );
+			System.out.println(foundPokemon.toString());
 		}
 		else
 		{
 			System.out.println("There are no pokemon with the information you gave.");
 		}
-		System.out.println("Please input another command.");
+		System.out.println("============/============");
+		System.out.println("How would you like to find your pokemon?");
+		System.out.println("\t'n' - find by name");
+		System.out.println("\t's' - find by total stats");
+		System.out.println("\t'g' - find by generation");
+		System.out.println("\t'i' - find by ID number");
+		System.out.println("Press x to return to home page.");
 	}
 
 	/**
@@ -74,6 +88,7 @@ public class Frontend {
 	public void updateDisplayArr(List<Pokemon> foundPokemon)
 	{
 		System.out.println("");
+		System.out.println("============/============");
 		System.out.println("After looking through inputted information, here are your results:\n");
 
 		if(foundPokemon != null)
@@ -89,7 +104,13 @@ public class Frontend {
 		{
 			System.out.println("There are no pokemon with the information you gave.");
 		}
-		System.out.println("Please input another command.");
+		System.out.println("============/============");
+		System.out.println("How would you like to find your pokemon?");
+		System.out.println("\t'n' - find by name");
+		System.out.println("\t's' - find by total stats");
+		System.out.println("\t'g' - find by generation");
+		System.out.println("\t'i' - find by ID number");
+		System.out.println("Press x to return to home page.");
 	}
 	/**
 	 * Prompt to start a search for a pokemon
@@ -102,7 +123,6 @@ public class Frontend {
 		System.out.println("\t's' - find by total stats");
 		System.out.println("\t'g' - find by generation");
 		System.out.println("\t'i' - find by ID number");
-		System.out.println("");
 		System.out.println("Press x to return to home page.");
 
 		String input = in.next();

@@ -110,7 +110,7 @@ public class Pokemon implements PokemonInterface {
 
 	@Override
 	public String toString() {
-		return this.name + "(" + this.getType1() + "," + this.getType2() + ")\n"
+		return this.name + "(" + this.getType1() + ", " + this.getType2() + ")\n"
 				+ "Total Stats: " +this.getTotalStats() +"\n"
 				+ "Attack: " + this.getAttack() + ", Defense: " +this.getDefense() + ", Speed: " +this.getSpeed() +"\n"
 				+ "Special Attack: " +this.getSpAttack()+", Special Defense: " +this.getSpDefense() +"\n"
