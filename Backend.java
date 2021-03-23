@@ -34,12 +34,15 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 
 		Node<Pokemon> current = tree.root;
 
-		// Searches tree
+		// Searches tree for Pokemon with given ID
 		while (current != null) {
+			// Current node ID < given ID --> search right subtree
 			if (current.data.getDexNum() < id) current = current.rightChild;
 
+			// Current node ID > given ID --> search left subtree
 			else if (current.data.getDexNum() > id) current = current.leftChild;
 
+			// Pokemon with given ID is found
 			else return current.data;
 
 		}
@@ -54,26 +57,23 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 	 * @return the Pokemon whos name matches the given name. If no such Pokemon is found, return null
 	 */
 	public List<Pokemon> getPokemonByName(String name) {
-
+		// List of Pokemon to return
 		List<Pokemon> pokemons = new ArrayList<>();
-
+		
 		Iterator<Pokemon> treeItr = tree.iterator();
-
-		// If first Pokemon's name matches given name, return that Pokemon
-		if (treeItr.hasNext() && treeItr.next().getName().contains(name))
-			pokemons.add(treeItr.next());
-
-		// In-order node traversal. Returns a Pokemon if its name matches the given name
+		
+		// Adds Pokemon to List whos name equals the given name
 		while (treeItr.hasNext()) {
-			if (treeItr.next().getName().contains(name))
-				pokemons.add(treeItr.next());
+			Pokemon p = treeItr.next();
+			if (p.getName().equals(name)) pokemons.add(p);
 		}
-
-		// If no Pokemon were added, null is returned
+		
+		// If no Pokemon with the given name is found
 		if (pokemons.isEmpty()) return null;
-
+		
 		return pokemons;
 	}
+
 
 	/**
 	 * Retrieves Pokemon with the given generation
@@ -82,22 +82,18 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 	 * @return the Pokemon whos name matches the given generation. If no such Pokemon is found, return null
 	 */
 	public List<Pokemon> getPokemonByGeneration(int gen) {
-		// List of Pokemon whos Generation is less than or equal to the given number
+		// List of Pokemon to return
 		List<Pokemon> pokemons = new ArrayList<>();
 
 		Iterator<Pokemon> treeItr = tree.iterator();
 
-		// First item added is first Pokemon whos gen are less than or equal to the given number
-		if (treeItr.hasNext() && treeItr.next().getGeneration() == gen)
-			pokemons.add(tree.iterator().next());
-
-		// Adds remaining Pokemon whos gen are less than or equal to the given number
+		// Adds Pokemon whos gen is less than or equal to the given number
 		while (treeItr.hasNext()) {
-			if (treeItr.next().getGeneration() == gen)
-				pokemons.add(treeItr.next());
+			Pokemon p = treeItr.next();
+			if (p.getGeneration() == gen) pokemons.add(p);
 		}
 
-		// If no Pokemon were added, null is returned
+		// If no Pokemon with the given gen is found
 		if (pokemons.isEmpty()) return null;
 
 		return pokemons;
@@ -116,14 +112,10 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 
 		Iterator<Pokemon> treeItr = tree.iterator();
 
-		// First item added is first Pokemon whos stats are less than or equal to the given number
-		if (treeItr.hasNext() && treeItr.next().getTotalStats() <= high)
-			pokemons.add(treeItr.next());
-
 		// Adds remaining Pokemon whos stats are less than or equal to the given number
 		while (treeItr.hasNext()) {
-			if (treeItr.next().getTotalStats() <= high)
-				pokemons.add(treeItr.next());
+			Pokemon p = treeItr.next();
+			if (p.getTotalStats() <= high) pokemons.add(p);
 		}
 
 		// If no Pokemon were added, null is returned
