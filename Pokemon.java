@@ -6,7 +6,6 @@
 // TA: dkiel2@wisc.edu
 // Lecturer: Florian
 // Notes to Grader: N/A
-import java.util.List;
 
 public class Pokemon implements PokemonInterface {
 	// #,Name,Type 1,Type 2,Total,HP,Attack,Defense,Sp. Atk,Sp. Def,Speed,Generation,Legendary
@@ -23,7 +22,7 @@ public class Pokemon implements PokemonInterface {
 	private int speed;
 	private int generation;
 	private boolean isLegendary;
-	
+
 	public Pokemon(int id, String name, String type1, String type2, int totalStats, int hp, int attack, int defense, int spAttack, int spDefense, int speed1, int generationA, boolean isLegend) {
 		this.dexNum=id;
 		this.name=name;
@@ -38,10 +37,12 @@ public class Pokemon implements PokemonInterface {
 		this.speed=speed1;
 		this.generation=generationA;
 		this.isLegendary=isLegend;
-		
+
 	}
 
-
+	/*
+	 * Getters
+	 */
 	@Override
 	public String getName() {
 		return this.name;
@@ -106,25 +107,25 @@ public class Pokemon implements PokemonInterface {
 	public int getHP() {
 		return this.hp;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.name + "(" + this.getType1() + "," + this.getType2() + ")\n"
 				+ "Total Stats: " +this.getTotalStats() +"\n"
 				+ "Attack: " + this.getAttack() + ", Defense: " +this.getDefense() + ", Speed: " +this.getSpeed() +"\n"
-				+ "Special Attack: " +this.getSpAttack()+", Special Defense: " +this.getSpDefense() +"\n" 
+				+ "Special Attack: " +this.getSpAttack()+", Special Defense: " +this.getSpDefense() +"\n"
 				+ "Generation: " +this.getGeneration() +", IsLegendary: " +this.isLegengary();
 	}
 
 	@Override
 	public int compareTo(Pokemon a) {
-		if(a==null || !a.getClass().equals(Pokemon.class))
+		if(a==null || !(a instanceof Pokemon))
 			throw new IllegalArgumentException("Comparison object is either not a pokemon or null");
 		if(this.getDexNum()>a.getDexNum())
 			return 1;
 		else if(this.getDexNum()<a.getDexNum())
 			return -1;
-		else 
+		else
 			return 0;
 	}
 

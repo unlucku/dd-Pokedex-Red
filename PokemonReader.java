@@ -15,6 +15,11 @@ import java.util.zip.DataFormatException;
 
 public class PokemonReader implements PokemonReaderInterface{
 
+	/**
+	 * Loads the pokemon from the search
+	 * @param Reader
+	 * @return loaded pokemons
+	 */
 	@Override
 	public List<Pokemon> readDataSet(Reader inputFileReader)
 			throws FileNotFoundException, IOException, DataFormatException {
@@ -27,29 +32,35 @@ public class PokemonReader implements PokemonReaderInterface{
 				throw new DataFormatException("Invalid Number of Columns");
 			}
 
-			
+
 			//Pokedex.add(new Pokemon((int)info.get(0),(String)info.get(1),(String)info.get(2),(String)info.get(3),(int)info.get(4),(int)info.get(5),(int)info.get(6),(int)info.get(7),(int)info.get(8),(int)info.get(9),(int)info.get(10),(int)info.get(11),(boolean)info.get(12)));
-			
+
 			Pokedex.add(new Pokemon(
-				Integer.parseInt(info.get(0)),
-				info.get(1),
-				info.get(2),
-				info.get(3),
-				Integer.parseInt(info.get(4)),
-				Integer.parseInt(info.get(5)),
-				Integer.parseInt(info.get(6)),
-				Integer.parseInt(info.get(7)),
-				Integer.parseInt(info.get(8)),
-				Integer.parseInt(info.get(9)),
-				Integer.parseInt(info.get(10)),
-				Integer.parseInt(info.get(11)),
-				Boolean.valueOf(info.get(12))
-			));
+					Integer.parseInt(info.get(0)),
+					info.get(1),
+					info.get(2),
+					info.get(3),
+					Integer.parseInt(info.get(4)),
+					Integer.parseInt(info.get(5)),
+					Integer.parseInt(info.get(6)),
+					Integer.parseInt(info.get(7)),
+					Integer.parseInt(info.get(8)),
+					Integer.parseInt(info.get(9)),
+					Integer.parseInt(info.get(10)),
+					Integer.parseInt(info.get(11)),
+					Boolean.valueOf(info.get(12))
+					));
 
 		}
 		return Pokedex;
 	}
-	
+
+	/**
+	 * Reads one line from the reader
+	 * @param Reader
+	 * @return Line
+	 * @throws IOException
+	 */
 	public String readInputReader(Reader r) throws IOException {
 		StringBuffer toReturn = new StringBuffer();
 		int z = 0;
@@ -59,6 +70,11 @@ public class PokemonReader implements PokemonReaderInterface{
 		return toReturn.toString();
 	}
 
+	/**
+	 * Parse a pokemon
+	 * @param e string containing pokemons info
+	 * @return Pokemon object
+	 */
 	public ArrayList<String> parsePokemon(String e) {
 		Object[] text = e.split(",");
 		ArrayList<String> toReturn = new ArrayList<String>();

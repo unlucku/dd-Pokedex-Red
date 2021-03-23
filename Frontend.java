@@ -7,25 +7,16 @@
 // Lecturer: Gary Dahl
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
-import java.util.List;
 
 public class Frontend {
 	public Scanner in = new Scanner(System.in); // Scanner to get inputs.
 
 	/**
-	 * creates a new Frontend object
-	 */
-	public Frontend() {
-		
-	}
-
-	/**
 	 * Runs the entire program.
-	 * 
+	 *
 	 * @param args the csv file path.
 	 * @throws IOException         if something goes wrong when reading the file
 	 * @throws DataFormatException if the data isn't formatted properly
@@ -36,13 +27,17 @@ public class Frontend {
 		frontend.run(Back);
 	}
 
+	/**
+	 * Starts the frontend
+	 * @param Backend
+	 */
 	public void run(Backend Back) {
 		System.out.println("Welcome to the Pokedex! Are you looking for pokemon? Press f to find them!");
 		System.out.println("(Or press x to quit if you are lame)");
 		String input = in.next();
 		while (!input.equalsIgnoreCase("x")) {
 			if (input.equalsIgnoreCase("f")) {
-				
+
 				findPokemon(Back);
 
 			}
@@ -51,7 +46,11 @@ public class Frontend {
 		System.out.println("Thanks for checking out the Pokedex, see you next time!");
 
 	}
-	
+
+	/**
+	 * Shows the results of the search
+	 * @param foundPokemon matching the search
+	 */
 	public void updateDisplay(Pokemon foundPokemon)
 	{
 		System.out.println("");
@@ -67,20 +66,24 @@ public class Frontend {
 		}
 		System.out.println("Please input another command.");
 	}
-	
+
+	/**
+	 * Shows the results of the search
+	 * @param list of foundPokemon matching the search
+	 */
 	public void updateDisplayArr(List<Pokemon> foundPokemon)
 	{
 		System.out.println("");
 		System.out.println("After looking through inputted information, here are your results:\n");
-		
+
 		if(foundPokemon != null)
 		{
 			for(int i = 0; i<foundPokemon.size(); i++) {
 				System.out.println(foundPokemon.get(i).getName() + "(" + foundPokemon.get(i).getType1() + " Type): ");
 				System.out.println("\tTotal Stat is " + foundPokemon.get(i).getTotalStats() + " and generation is " + foundPokemon.get(i).getGeneration() );
-				
+
 			}
-			
+
 		}
 		else
 		{
@@ -88,7 +91,10 @@ public class Frontend {
 		}
 		System.out.println("Please input another command.");
 	}
-	
+	/**
+	 * Prompt to start a search for a pokemon
+	 * @param Backend
+	 */
 	private void findPokemon(Backend back)
 	{
 		System.out.println("How would you like to find your pokemon?");
@@ -98,7 +104,7 @@ public class Frontend {
 		System.out.println("\t'i' - find by ID number");
 		System.out.println("");
 		System.out.println("Press x to return to home page.");
-		
+
 		String input = in.next();
 		while(!input.equalsIgnoreCase("x"))
 		{
@@ -141,6 +147,6 @@ public class Frontend {
 			input = in.next();
 		}
 		System.out.println("Returning to home.");
-	
+
 	}
 }
