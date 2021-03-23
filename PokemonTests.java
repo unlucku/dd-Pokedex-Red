@@ -52,8 +52,4 @@ public class PokemonTests {
 		if(Bulbasaur.isLegengary()||!Mew.isLegengary())
 			fail("Test not yet implemented");
 }
-
-	@Test public void testReader() {
-		//READER TEST TO BE IMPLEMENTED IN COMING WEEK
-}
 }
