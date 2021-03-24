@@ -105,22 +105,23 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 	}
 
 	/**
-	 * Retrieves all Pokemon in tree whos total stats are lower than the number specified
+	 * Retrieves all Pokemon in tree whos total stats are in the bounds specified
 	 *
-	 * @param high
-	 * @return List of Pokemon whos Total Stats are lower than number specified
+	 * @param low the lower bound of stats
+	 * @param high the upper bound of stats
+	 * @return List of Pokemon whos Total Stats are in the bounds specified
 	 */
-	public List<Pokemon> getPokemonInStatRange(int high) {
+	public List<Pokemon> getPokemonInStatRange(int low, int high) {
 
-		// List of Pokemon whos Total Stats are less than or equal to the given number
 		List<Pokemon> pokemons = new ArrayList<>();
 
+		// Tree iterator
 		Iterator<Pokemon> treeItr = tree.iterator();
 
 		// Adds remaining Pokemon whos stats are less than or equal to the given number
 		while (treeItr.hasNext()) {
 			Pokemon p = treeItr.next();
-			if (p.getTotalStats() <= high) pokemons.add(p);
+			if (p.getTotalStats() >= low && p.getTotalStats() <= high) pokemons.add(p);
 		}
 
 		// If no Pokemon were added, null is returned
@@ -214,7 +215,6 @@ public class Backend implements BackendInterface {
 	 * @return pokemon corresponding to the id
 	 */
 	public Pokemon getID(int id) {
-
 		return new RBTExtension(tree).getPokemonById(id);
 	}
 
@@ -223,7 +223,6 @@ public class Backend implements BackendInterface {
 	 * @return pokemon corresponding to the name
 	 */
 	public List<Pokemon> getName(String name) {
-
 		return new RBTExtension(tree).getPokemonByName(name);
 	}
 
@@ -239,8 +238,10 @@ public class Backend implements BackendInterface {
 	 * Gets a pokemon based on a stat range
 	 * @return pokemon corresponding to the stat range
 	 */
-	public List<Pokemon> getBST(int stats) {
-		return new RBTExtension(tree).getPokemonInStatRange(stats);
+	public List<Pokemon> getBST(int lower, int higher) {
+		return new RBTExtension(tree).getPokemonInStatRange(lower, higher);
 	}
+
+
 
 }

@@ -97,13 +97,16 @@ public class BackEndDeveloperTests {
 		));
 		
 		// Case 1: No results
-		assertEquals(null, b.getBST(10));
+		assertEquals(null, b.getBST(0, 10));
 		
 		// Case 2: Half the Pokemon returned
-		assertEquals(2, b.getBST(320).size());
+		assertEquals(2, b.getBST(0, 320).size());
 		
 		// Case 3: All Pokemon returned
-		assertEquals(5, b.getBST(550).size());
+		assertEquals(5, b.getBST(0, 550).size());
+
+		// Case 4: Pokemon in specific range of stats
+		assertEquals(2, b.getBST(400, 410).size());
 	}
 	
 	/**
