@@ -3,14 +3,14 @@ run: compile
 
 compile: Frontend.class
 
-Frontend.class: Frontend.java BackEndDeveloperTests.class FrontendTests.class PokemonTests.class Backend.class BackendInterface.class Frontend.class Pokemon.class PokemonInterface.class PokemonReader.class PokemonReaderInterface.class RedBlackTree.class SortedCollectionInterface.class
+Frontend.class: Frontend.java BackEndDeveloperTests.class TestFrontend.class PokemonTests.class Backend.class BackendInterface.class Frontend.class Pokemon.class PokemonInterface.class PokemonReader.class PokemonReaderInterface.class RedBlackTree.class SortedCollectionInterface.class
 	javac -cp .:junit5.jar Frontend.java
 	
 BackEndDeveloperTests.class: BackEndDeveloperTests.java
 	javac -cp .:junit5.jar BackEndDeveloperTests.java
 	
-FrontendTests.class: FrontendTests.java
-	javac -cp .:junit5.jar FrontendTests.java
+FrontendTests.class: TestFrontend.java
+	javac -cp .:junit5.jar TestFrontend.java
 	
 PokemonTests.class: PokemonTests.java
 	javac -cp .:junit5.jar PokemonTests.java
