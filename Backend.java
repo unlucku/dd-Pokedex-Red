@@ -70,7 +70,9 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 		// Adds Pokemon to List whos name equals the given name
 		while (treeItr.hasNext()) {
 			Pokemon p = treeItr.next();
-			if (p.getName().toLowerCase().contains(name)) pokemons.add(p);
+			if (p.getName().toLowerCase().contains(name.toLowerCase())) {
+				pokemons.add(p);
+			}
 		}
 
 		// If no Pokemon with the given name is found
