@@ -22,7 +22,7 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 
 	/**
 	 * Constructor that takes a Red Black Tree as a parameter
-	 * 
+	 *
 	 * @param tree the Red Black Tree this child class will interact with
 	 */
 	public RBTExtension(RedBlackTree<Pokemon> tree) {
@@ -64,18 +64,18 @@ class RBTExtension extends RedBlackTree<Pokemon> {
 	public List<Pokemon> getPokemonByName(String name) {
 		// List of Pokemon to return
 		List<Pokemon> pokemons = new ArrayList<>();
-		
+
 		Iterator<Pokemon> treeItr = tree.iterator();
-		
+
 		// Adds Pokemon to List whos name equals the given name
 		while (treeItr.hasNext()) {
 			Pokemon p = treeItr.next();
-			if (p.getName().equals(name)) pokemons.add(p);
+			if (p.getName().toLowerCase().contains(name)) pokemons.add(p);
 		}
-		
+
 		// If no Pokemon with the given name is found
 		if (pokemons.isEmpty()) return null;
-		
+
 		return pokemons;
 	}
 

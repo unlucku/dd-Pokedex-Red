@@ -42,7 +42,7 @@ public class Frontend {
 	public void run(Backend Back) {
 		System.out.println("Welcome to the Pokedex! Are you looking for pokemon? Press f to find them!");
 		System.out.println("(Or press x to quit if you are lame)");
-		String input = in.next();
+		String input = in.nextLine();
 		while (!input.equalsIgnoreCase("x")) {
 			if (input.equalsIgnoreCase("f")) {
 
@@ -94,8 +94,8 @@ public class Frontend {
 		if(foundPokemon != null)
 		{
 			for(int i = 0; i<foundPokemon.size(); i++) {
-				System.out.println(foundPokemon.get(i).getName() + "(" + foundPokemon.get(i).getType1() + " Type): ");
-				System.out.println("\tTotal Stat is " + foundPokemon.get(i).getTotalStats() + " and generation is " + foundPokemon.get(i).getGeneration() );
+				System.out.println(foundPokemon.get(i).toString());
+				System.out.println();
 
 			}
 
@@ -123,9 +123,9 @@ public class Frontend {
 		System.out.println("\t's' - find by total stats");
 		System.out.println("\t'g' - find by generation");
 		System.out.println("\t'i' - find by ID number");
-		System.out.println("Press x to return to home page.");
+		System.out.println("Press x to quit the app.");
 
-		String input = in.next();
+		String input = in.nextLine();
 		while(!input.equalsIgnoreCase("x"))
 		{
 			switch(input)
@@ -140,14 +140,14 @@ public class Frontend {
 				case "s":
 				{
 					System.out.println("Type stat number you are searching for: (Press enter when done)");
-					int num = in.nextInt();
+					int num = Integer.parseInt(in.nextLine());
 					updateDisplayArr(back.getBST(num));
 					break;
 				}
 				case "g":
 				{
 					System.out.println("Type generation of pokemon you are searching for: (Press enter when done)");
-					int num = in.nextInt();
+					int num = Integer.parseInt(in.nextLine());
 					updateDisplayArr(back.getGen(num));
 					break;
 				}
@@ -158,13 +158,18 @@ public class Frontend {
 					updateDisplay(back.getID(num));
 					break;
 				}
+				case "x":
+				{
+					System.out.println("Exiting...");
+					System.exit(0);
+				}
 				default:
 				{
 					System.out.println("That is not a valid input, please select one of the inputs above.");
 					break;
 				}
 			}
-			input = in.next();
+			input = in.nextLine();
 		}
 		System.out.println("Returning to home.");
 
