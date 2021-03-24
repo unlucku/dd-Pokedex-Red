@@ -244,6 +244,8 @@ public class Backend implements BackendInterface {
 		return new RBTExtension(tree).getPokemonInStatRange(lower, higher);
 	}
 
-
+	public List<Pokemon> getBST(int stats) {
+		return new RBTExtension(tree).getPokemonInStatRange(0, stats);
+	}
 
 }
