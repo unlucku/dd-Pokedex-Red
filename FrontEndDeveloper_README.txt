@@ -1,29 +1,25 @@
 FrontEndDeveloper README for Project Two (CS400 @ UW Madison)
 ========================================================
-
-Name of FrontEndDeveloper: <enter your complete name here>
-@wisc.edu Email of FrontEndDeveloper: <enter your @wisc.edu email address here>
-Group: <enter your two letter group name here>
-Team: <enter your team color: red, blue, or purple, here>
+Name of FrontEndDeveloper: Robbie Peissig
+@wisc.edu Email of FrontEndDeveloper: rpeissig@wisc.edu
+Group: DD
+Team: Blue
 
 Files Written by Me:
---------------------
-<List all files that were within this project that were written by you, and
- include a short description of the purpose that each file servers>
+-------------------------
+Frontend.java- creates the user interface to call the Backend and find/retrieve pokemon in an organized manner
+FrontEndDeveloperTests.java - tests the working properties of Frontend.java
+ 
+
 
 Additional Contributions:
 -------------------------
-<List any additional contributions that you have made toward your team's
- completion of this project.  This might include, but is not limited to things
- like: organizing team communication, creating extra tests or dummy classes,
- assisting team members in any way, etc.>
+I helped the backend with determining his Interface methods, as well as comunnicated back and forth 
+with the Red team to help them as well. The frontend developer for the Red team had dropped the class
+so I was in charge of ensuring the frontend worked for their program as well as helping the Red backend
+developer create and implement the interface.
+
 
 Signature:
-----------
-<Type out your full name here to certify that all of the files written by you
- that are listed above are the product of your individual development efforts
- for this programming assignment.  List below your name, any exceptions, for 
- example: work reused from a previous semester, code examples taken from any 
- website or book, or anything that was not explicitly authored by you for
- the purpose of completing this assigned CS400 project.>
- 
+-------------------------
+Robbie Peissig

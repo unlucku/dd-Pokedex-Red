@@ -1,32 +1,36 @@
 IntegrationManager README for Project Two (CS400 @ UW Madison)
 ==============================================================
 
-Name of IntegrationManager: <enter your complete name here>
-@wisc.edu Email of IntegrationManager: <enter your @wisc.edu email address here>
-Group: <enter your two letter group name here>
-Team: <enter your team color: red, blue, or purple, here>
+Name of IntegrationManager: Maaz Amin
+@wisc.edu Email of IntegrationManager: mamin6@wisc.edu
+Group: DD
+Team: Red
 
 Complete List of Files:
 -----------------------
-<List all files that are a part of this project along with the name of the team
- member(s) who were most responsible for implementing the computation within
- each of these files.>
+
+- BackendInterface.java: Brendan Boyle
+- Backend.java: Brendan Boyle
+- BackEndDeveloperTests.java: Brendan Boyle
+- Pokemon.java: Michael Corbishley
+- PokemonInterface.java: Michael Corbishley
+- PokemonReader.java: Michael Corbishley
+- PokemonReaderInterface.java: Michael Corbishley
+- Frontend.java: Robbie Peisig (Team Blue), Maaz Amin (Team Red)
+- RedBlackTree.java: Maaz Amin
 
 Instructions to Build, Run and Test your Project:
 -------------------------------------------------
-<Describe here any instructions that will be needed by course staff to build,
- run, and test this project.>
+make run - This command will compile and run the project
+make test -  This command will run the tests
+
 
 Team Member Contributions:
 --------------------------
-<List the efforts of any members on your team that went above the team's
- expectations for their contributions to this project.  Also identify any
- ways that team members failed to meet the expectations of the group, for
- example: missed deadlines, lack of communication, lack of effort, etc.>
+All team members went above and beyond in communicating and helping each other out
+since our original frontend developer dropped the course. At first a daunting task,
+we were able to make up for the absence and make sure we finished our project on time.
 
 Signature:
 ----------
-<Type out your full name here to certify that to the best of your
- understanding, the contents of this submission represent the efforts of your
- team members. If you are aware of any exceptions to this, please describe them here below your name.>
- 
+Maaz Amin
